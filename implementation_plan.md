@@ -7,8 +7,9 @@ Emerald Portfolio
 - Application structure, theming, layout, content sections, and orb interaction are implemented.
 - **Track A (Animation & Theme Transition Alignment) is complete and visually approved by the owner.**
 - **Track B (App Router & Rendering Refactor) is complete.**
-- **Track C (Next.js Conventions & Quality Polish) is complete**, except the intentionally deferred `next upgrade`.
-- `tsc --noEmit`, `eslint`, and the Turbopack build (compile + static prerender) all pass. `next build` still stops at the final step on the upstream security-advisory nudge, which the owner deferred.
+- **Track C (Next.js Conventions & Quality Polish) is complete.**
+- **Next.js security upgrade complete:** `next` and `eslint-config-next` bumped 16.4.3 → 16.4.6 (patched release) via `next upgrade --agent=security`, applied and committed in place on `main`.
+- `tsc --noEmit`, `eslint`, and `npm run build` (Turbopack compile, TypeScript, and static prerender) all pass — the build no longer stops on the security advisory.
 
 ## Objective
 Keep a responsive personal portfolio faithful to `docs/PRD.md` and `docs/design.md`:
@@ -40,7 +41,7 @@ Keep a responsive personal portfolio faithful to `docs/PRD.md` and `docs/design.
 | 18 | Focus rings | `ring-1` + hardcoded accent on two controls | Fixed (Track C) |
 | 19 | Touch targets | Several controls under 44×44px | Fixed (Track C) |
 | 20 | `transition-all` | Used on Contact actions (spec forbids it) | Fixed (Track C) |
-| 21 | Security advisory | `next build` blocks on advisory | Deferred by owner |
+| 21 | Security advisory | `next build` blocks on advisory | Fixed — upgraded to 16.4.6 |
 
 ## Track A — Animation & Theme Transition Alignment (COMPLETE)
 - Central design tokens in `globals.css`: `--surface-raised`, `--focus-ring`, `--accent-rgb`, `--color-focus-ring`, `--duration-400`, and a single `--theme-transition-duration` (350ms).
@@ -70,7 +71,7 @@ Keep a responsive personal portfolio faithful to `docs/PRD.md` and `docs/design.
 ### B6. `<main>` focus handling
 - Removed the unexplained `tabIndex={-1}` and replaced it with a proper **"Skip to content"** skip link targeting `#main-content`.
 
-## Track C — Next.js Conventions & Quality Polish (COMPLETE, minus upgrade)
+## Track C — Next.js Conventions & Quality Polish (COMPLETE)
 
 ### C1. App Router special files
 - `src/app/not-found.tsx` — themed 404 inside the root layout with a "Return Home" link.
@@ -89,18 +90,22 @@ Keep a responsive personal portfolio faithful to `docs/PRD.md` and `docs/design.
 - `active:scale-95` → `active:scale-[0.98]` across Hero, Contact, and the orb, per design §9.
 - Contact actions switched from `transition-all` to explicit transition properties.
 
-### C4. Deferred
-- `next upgrade --agent=security` intentionally not run.
+### C4. Next.js security upgrade
+- Ran `next upgrade --agent=security` against target 16.4.6 (a patched release for a published security advisory affecting 16.4.3).
+- Bumped `next` and `eslint-config-next` to 16.4.6, kept them **exactly pinned** (reverted npm's `^` caret so installs cannot drift off a verified patch), and regenerated `package-lock.json`.
+- Added `experimental.agentUpgrade: "security"` to `next.config.ts` per the upgrade instructions, preserving the existing `agentFeedback` and `turbopack` configuration.
+- Applied in place on `main` (no separate worktree), committed as a single dependency commit.
+- Incident during install: a running `next dev` server held the previous SWC native binary, causing `EPERM` and leaving a stale `@next/.swc-*` directory. The dev server was stopped, the orphan removed, and dependencies reinstalled cleanly. The dev server must be restarted by the owner.
 
 ## Verification
 - `npx tsc --noEmit`: passes.
 - `npm run lint`: passes.
-- `npm run build`: Turbopack compile, TypeScript, and static generation pass; stops only on the upstream security advisory.
+- `npm run build`: Turbopack compile, TypeScript, and static generation pass with exit code 0; the security advisory no longer blocks the build.
 - Prerendered HTML inspected: theme script present in `<head>`, `--sidebar-width` used, skip link rendered, `id="main-content"` present, `tabindex="-1"` gone, `_not-found` route generated with theme tokens.
 
 ## Remaining / Not Verified
 - Real-browser verification of Tracks B and C (flash of yellow on reload, skip link, 404, error boundary, mobile nav focus and tap targets) has not been performed by an automated browser; the owner should confirm.
-- `next upgrade --agent=security` remains deferred.
+- `npm audit` still reports advisories in transitive **dev** dependencies; these are unrelated to the Next.js advisory and were intentionally left untouched.
 
 ## Scope Restrictions
 - No backend, database, or authentication.

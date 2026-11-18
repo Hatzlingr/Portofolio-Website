@@ -9,6 +9,7 @@
 - [x] Track A — Animation & theme transition alignment implemented, checked, and owner-approved.
 - [x] Track B — App Router & rendering refactor implemented and statically checked.
 - [x] Track C — App Router special files, focus audit, and touch-target polish implemented and statically checked.
+- [x] Next.js security upgrade applied (16.4.3 → 16.4.6); `npm run build` now passes.
 
 > Only mark an item complete after the work has been performed and checked. If a task is already complete in the workspace, verify it before changing its status.
 
@@ -124,5 +125,5 @@
 - [x] `npx tsc --noEmit`, `npm run lint`, and `npm run build` (compile + prerender) pass.
 - [x] Inspect prerendered HTML for the theme script, skip link, sidebar variable, and `_not-found` route.
 - [x] Re-verify reduced-motion behaviour is unaffected by the Track B/C changes (all new UI avoids required motion).
-- [ ] Run `next upgrade --agent=security` when approved (currently deferred by owner).
+- [x] Run `next upgrade --agent=security`: upgraded Next.js 16.4.3 → 16.4.6 in place on `main` and committed.
 - [ ] Owner verifies the 404 page, error boundary, and mobile navigation in a real browser.
