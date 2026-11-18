@@ -1,26 +1,111 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Emerald theme — default (docs/design.md §2) */
+  --background: #050807;
+  --surface: #0a1510;
+  --surface-raised: #0d1b13;
+  --surface-hover: #0f1f18;
+  --accent: #00e676;
+  --accent-rgb: 0 230 118;
+  --accent-bright: #39ff88;
+  --accent-glow: rgba(0, 230, 118, 0.15);
+  --accent-glow-subtle: rgba(0, 230, 118, 0.05);
+  --text-primary: #e8f5ec;
+  --text-muted: #91a99a;
+  --border: #123a27;
+  --border-subtle: #0d281b;
+  --focus-ring: #39ff88;
+  --sidebar-width: 180px;
+  /* Single source of truth for the global palette cross-fade */
+  --theme-transition-duration: 350ms;
+}
+
+[data-theme="yellow"] {
+  /* Yellow theme (docs/design.md §2) */
+  --background: #080704;
+  --surface: #171407;
+  --surface-raised: #211b08;
+  --surface-hover: #221d0b;
+  --accent: #ffc400;
+  --accent-rgb: 255 196 0;
+  --accent-bright: #ffe45c;
+  --accent-glow: rgba(255, 196, 0, 0.15);
+  --accent-glow-subtle: rgba(255, 196, 0, 0.05);
+  --text-primary: #f8f3df;
+  --text-muted: #b4a982;
+  --border: #4b3b10;
+  --border-subtle: #30260b;
+  --focus-ring: #ffe45c;
 }
 
 @theme inline {
   --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-surface-hover: var(--surface-hover);
+  --color-accent: var(--accent);
+  --color-accent-bright: var(--accent-bright);
+  --color-accent-glow: var(--accent-glow);
+  --color-accent-glow-subtle: var(--accent-glow-subtle);
+  --color-text-primary: var(--text-primary);
+  --color-text-muted: var(--text-muted);
+  --color-border: var(--border);
+  --color-border-subtle: var(--border-subtle);
+  --color-focus-ring: var(--focus-ring);
+  --font-sans: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: var(--font-geist-mono), monospace;
+  /* Registers Tailwind's duration-400 utility, used by layout/sidebar/orb */
+  --duration-400: 400ms;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
+  scroll-behavior: smooth;
 }
 
 body {
+  background-color: var(--background);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  transition-property: background-color, color, border-color, fill, stroke;
+  transition-duration: var(--theme-transition-duration);
+  transition-timing-function: ease;
+}
+
+/* Custom scrollbar matching futuristic minimalist theme */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
   background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
