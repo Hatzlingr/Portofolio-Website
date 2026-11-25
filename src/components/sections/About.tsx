@@ -81,21 +81,21 @@ export function About() {
             className="lg:col-span-7 flex flex-col gap-5 text-base sm:text-lg text-[var(--text-muted)] leading-relaxed max-w-2xl"
           >
             <p>
-              I am an undergraduate student in Informatics Engineering at{' '}
+              I&apos;m an Informatics Engineering student at{' '}
               <span className="text-[var(--text-primary)] font-medium">
                 Universitas Sriwijaya
-              </span>
-              , driven by a deep curiosity about software engineering principles, high-performance web systems, and system-level architecture.
+              </span>{' '}
+              with a broad curiosity for how software systems work, from web applications and machine learning to security and game development.
             </p>
             <p>
-              My development philosophy focuses on{' '}
+              I like keeping my work{' '}
               <span className="text-[var(--accent)] font-medium">
-                clarity, precision, and technical restraint
+                clean, minimal, and intentional
               </span>
-              . Rather than overwhelming interfaces with needless embellishments, I build applications that prioritize clean user journeys, predictable states, and robust type safety.
+              . Good software doesn&apos;t need unnecessary clutter; it just needs clear structure, reliable logic, and a smooth user experience.
             </p>
             <p>
-              Whether engineering scalable full-stack web applications with Next.js and TypeScript or optimizing low-overhead backend services, I treat every project as an opportunity to implement clean code, maintainable architecture, and intuitive design.
+              Most of what I know comes from hands-on building, whether that&apos;s developing full-stack web apps, competing in CTFs, or prototyping 3D games in Godot.
             </p>
           </motion.div>
 

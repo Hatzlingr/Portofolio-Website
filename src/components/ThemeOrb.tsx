@@ -11,7 +11,7 @@ interface ThemeOrbProps {
 }
 
 export function ThemeOrb({ size = 260, className = '', showLabels = true }: ThemeOrbProps) {
-  const { activeTheme, persistentTheme, toggleTheme, startHoverPreview, endHoverPreview } = useTheme();
+  const { activeTheme, toggleTheme, startHoverPreview, endHoverPreview } = useTheme();
   const shouldReduceMotion = useReducedMotion();
   const isReduced = Boolean(shouldReduceMotion);
 
@@ -103,16 +103,14 @@ export function ThemeOrb({ size = 260, className = '', showLabels = true }: Them
       >
         {/* Layer 1: Ambient light spill & glow behind the SVG */}
         <div
-          className={`absolute -inset-4 sm:-inset-6 rounded-full pointer-events-none transition-[opacity,transform] duration-300 blur-2xl ${
-            isHovered ? 'opacity-70 scale-115' : 'opacity-20 scale-95'
-          }`}
+          className={`absolute -inset-4 sm:-inset-6 rounded-full pointer-events-none transition-[opacity,transform] duration-300 blur-2xl ${isHovered ? 'opacity-70 scale-115' : 'opacity-20 scale-95'
+            }`}
           style={{ background: lightSpillInner }}
           aria-hidden="true"
         />
         <div
-          className={`absolute -inset-8 sm:-inset-12 rounded-full pointer-events-none transition-[opacity,transform] duration-300 blur-3xl ${
-            isHovered ? 'opacity-50 scale-125' : 'opacity-10 scale-90'
-          }`}
+          className={`absolute -inset-8 sm:-inset-12 rounded-full pointer-events-none transition-[opacity,transform] duration-300 blur-3xl ${isHovered ? 'opacity-50 scale-125' : 'opacity-10 scale-90'
+            }`}
           style={{
             background: `radial-gradient(circle, ${lightSpillOuter} 0%, transparent 70%)`,
           }}
@@ -277,9 +275,9 @@ export function ThemeOrb({ size = 260, className = '', showLabels = true }: Them
                   isReduced
                     ? { scale: 1, opacity: 0.85 }
                     : {
-                        scale: isHovered ? [0.96, 1.12, 0.96] : [0.94, 1.06, 0.94],
-                        opacity: isHovered ? [0.85, 1, 0.85] : [0.75, 0.95, 0.75],
-                      }
+                      scale: isHovered ? [0.96, 1.12, 0.96] : [0.94, 1.06, 0.94],
+                      opacity: isHovered ? [0.85, 1, 0.85] : [0.75, 0.95, 0.75],
+                    }
                 }
                 transition={{
                   repeat: Infinity,
@@ -351,13 +349,7 @@ export function ThemeOrb({ size = 260, className = '', showLabels = true }: Them
               style={{ backgroundColor: 'var(--accent)' }}
             />
             <span>THEME: {activeTheme}</span>
-            {persistentTheme !== activeTheme && (
-              <span className="text-[10px] text-[var(--text-muted)]">(PREVIEW)</span>
-            )}
           </div>
-          <span className="text-[11px] text-[var(--text-muted)] mt-1.5 font-mono">
-            Click / tap to toggle &bull; Hover to preview
-          </span>
         </div>
       )}
     </div>

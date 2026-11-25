@@ -25,6 +25,10 @@ The visual direction is minimalist, futuristic, and inspired by Green Lantern ae
 - Use semantic HTML.
 - Keep the implementation responsive.
 - Follow accessibility best practices.
+- Isolate `"use client"` strictly to leaf interactive/animated components; keep page layouts and static sections as Server Components.
+- Use Tailwind CSS v4 conventions (`@import "tailwindcss";` and `@theme` tokens in CSS rather than legacy `tailwind.config.js/ts` patterns).
+- Import Motion from `motion/react` (matching the installed package) and animate GPU-composited properties (`transform`, `opacity`, CSS custom properties) for 60fps performance.
+- Respect `prefers-reduced-motion` for accessibility.
 
 ## Dependency Rules
 - Do not install new dependencies without approval.
@@ -37,6 +41,8 @@ The visual direction is minimalist, futuristic, and inspired by Green Lantern ae
 - Avoid excessive gradients, glow effects, cards, and animations.
 - Keep the interface clean, polished, and readable.
 - Prioritize the actual content over decorative elements.
+- Strictly match every animation's trigger, duration, easing curve, and state transition (especially the interactive emerald-to-yellow theme transition) to the exact specifications in `docs/design.md`.
+- Do not replace custom specified choreography with generic fade-in/slide-up animations.
 
 ## Implementation Workflow
 1. Inspect the current codebase.

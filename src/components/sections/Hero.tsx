@@ -108,7 +108,7 @@ export function Hero() {
           }}
           className="lg:col-span-5 flex justify-center items-center"
         >
-          <ThemeOrb size={300} showLabels={true} />
+          <ThemeOrb size={300} showLabels={false} />
         </motion.div>
       </div>
     </section>
